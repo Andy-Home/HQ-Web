@@ -2,4 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.andy.dao.db.UserInfoDao">
 
+    <insert id="registerWeiXin">
+        insert into user_info (wei_xin_open_id, wei_xin_access_token, wei_xin_refresh_token)
+        values (#{openId}, #{accessToken}, #{refreshToken})
+    </insert>
+    <update id="updateWeiXinRefreshToken">
+        update user_info
+        set wei_xin_refresh_token = #{refreshToken}
+        where wei_xin_open_id = #{openId}
+    </update>
+    <update id="updateWeiXinAccessToken">
+        update user_info
+        set wei_xin_access_token = #{accessToken}
+        where wei_xin_open_id = #{openId}
+    </update>
+    <select id="queryUserInfoByWeiXinOpenId" resultType="java.util.Map">
+        select
+            id,
+            home_id,
+            nick_name,
+            sex,
+            head_url
+        from user_info
+        where wei_xin_open_id = #{openId}
+    </select>
+    <select id="queryUserInfoById" resultType="java.util.Map">
+        select
+            id,
+            home_id,
+            nick_name,
+            sex,
+            head_url
+        from user_info
+        where id = #{id}
+    </select>
 </mapper>
