@@ -38,7 +38,7 @@
         <!-- 数据源 -->
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:sqlmap/*Dao.xml"/>
-        <property name="typeAliasesPackage" value="com.andy.entity"/>
+        <!--<property name="typeAliasesPackage" value="com.andy.entity"/>-->
 
     </bean>
 

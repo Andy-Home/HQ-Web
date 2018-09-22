@@ -2,6 +2,7 @@ package com.andy.dao.db;
 
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserInfoDao {
@@ -18,4 +19,6 @@ public interface UserInfoDao {
     Map<String, Object> queryUserInfoByWeiXinOpenId(@Param("openId") String openId);
 
     Map<String, Object> queryUserInfoById(@Param("id") int id);
+
+    List<Integer> queryRelationUserId(@Param("id") int id);
 }

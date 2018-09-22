@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.andy.dao.db.RecordInfoDao">
+    <insert id="insertRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO record_info (user_id, amount, catalog_id, type, record_time, update_time)
+        VALUES (#{userId}, #{amount}, #{catalogId}, #{type}, #{recordTime}, CURRENT_TIMESTAMP)
+    </insert>
+    <update id="updateRecord">
+        UPDATE record_info
+        SET user_id = #{userId},
+        amount = #{amount},
+        catalog_id = #{catalogId},
+        `type` = #{type},
+        record_time = #{recordTime},
+        update_time = CURRENT_TIMESTAMP
+        WHERE
+        id = #{id}
+    </update>
+    <delete id="deleteRecordById">
+        DELETE
+        *
+        FROM
+        record_info
+        WHERE
+        id = #{id}
+    </delete>
+    <select id="queryRecords" resultType="java.util.Map">
+        SELECT
+        id,
+        user_id AS userId,
+        amount,
+        catalog_id AS catalogId,
+        `type`,
+        record_time AS recordTime
+        FROM
+        record_info
+        WHERE
+        record_time &lt; #{time} AND user_id = #{userId}
+        LIMIT 0, #{num}
+
+    </select>
+</mapper>

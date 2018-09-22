@@ -36,4 +36,18 @@
         from user_info
         where id = #{id}
     </select>
+    <select id="queryRelationUserId" resultType="java.lang.Integer">
+        SELECT
+        id
+        FROM
+        user_info
+        WHERE home_id = (
+        SELECT
+        home_id
+        FROM
+        user_info
+        WHERE
+        id = #{id}
+        )
+    </select>
 </mapper>
