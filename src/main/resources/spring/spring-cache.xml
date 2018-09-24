@@ -11,11 +11,6 @@
             <set>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
                       p:name="default"/>
-
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-                      p:name="goodQualityKeyCache"/>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-                      p:name="badQualityKeyCache"/>
             </set>
         </property>
     </bean>

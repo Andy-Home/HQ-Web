@@ -58,7 +58,7 @@ public class RecordController {
     }
 
     @ResponseBody
-    @RequestMapping("/newRecord")
+    @RequestMapping("/new")
     public Response newRecord(@RequestParam String data) {
         JSONObject json;
         try {
@@ -67,9 +67,9 @@ public class RecordController {
             return ResponseUtils.getParameterError("check data is Json data");
         }
 
-        boolean result;
+        int id;
         try {
-            result = mRecordService.insertNewRecord(json);
+            id = mRecordService.insertNewRecord(json);
         } catch (Exception e) {
             if (e instanceof JSONException) {
                 String msg = e.getMessage();
@@ -80,15 +80,15 @@ public class RecordController {
             }
         }
 
-        if (result) {
-            return ResponseUtils.getSuccess();
+        if (id > 0) {
+            return ResponseUtils.getSuccess(id);
         } else {
             return ResponseUtils.getFail();
         }
     }
 
     @ResponseBody
-    @RequestMapping("/updateRecord")
+    @RequestMapping("/update")
     public Response updateRecord(@RequestParam String data) {
         JSONObject json;
         try {
@@ -119,7 +119,7 @@ public class RecordController {
     }
 
     @ResponseBody
-    @RequestMapping("/deleteRecord")
+    @RequestMapping("/delete")
     public Response deleteRecord(@RequestParam int recordId,
                                  @RequestParam int userId) {
         boolean result;

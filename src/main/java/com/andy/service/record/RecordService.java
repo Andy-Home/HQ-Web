@@ -29,7 +29,7 @@ public class RecordService {
     @Autowired
     private UserInfoDao mUserInfoDao;
 
-    public boolean insertNewRecord(JSONObject jsonObject) {
+    public int insertNewRecord(JSONObject jsonObject) {
         int userId = jsonObject.getInt("userId");
         double amount = jsonObject.getDouble("amount");
         int catalogId = jsonObject.getInt("catalogId");
@@ -47,9 +47,9 @@ public class RecordService {
                     mSyncRecordDao.insertRecord(id, userId, recordId, amount, catalogId, type, recordTime, "i");
                 }
             }
-            return true;
+            return recordId;
         } else {
-            return false;
+            return 0;
         }
     }
 

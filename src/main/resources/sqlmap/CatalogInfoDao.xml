@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.andy.dao.db.CatalogInfoDao">
+    <insert id="insertCatalog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO catalog_info (parent_id, user_id, name, type)
+        VALUES (#{parentId}, #{userId}, #{name}, #{type})
+    </insert>
+    <update id="updateCatalog">
+        UPDATE catalog_info
+        SET parent_id = #{parentId},
+            user_id   = #{userId},
+            name      = #{name},
+            type      = #{type}
+        WHERE id = #{id}
+    </update>
+    <update id="deleteCatalog">
+        UPDATE catalog_info
+        SET status = 0
+        WHERE id = #{id}
+    </update>
+    <select id="queryCatalogs" resultType="java.util.Map">
+        SELECT
+            id,
+            parent_id AS parentId,
+            user_id   AS userId,
+            name,
+            type
+        FROM
+            catalog_info
+        WHERE
+            user_id = #{userId} AND parent_id = #{parentId} AND status = 1
+    </select>
+</mapper>

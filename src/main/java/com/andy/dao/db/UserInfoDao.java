@@ -21,4 +21,11 @@ public interface UserInfoDao {
     Map<String, Object> queryUserInfoById(@Param("id") int id);
 
     List<Integer> queryRelationUserId(@Param("id") int id);
+
+    int registerQQ(@Param("openId") String openId,
+                   @Param("accessToken") String accessToken);
+
+    Integer queryIdByQQOpenId(@Param("openId") String openId);
+
+    Integer queryIdByWeiXinOpenId(@Param("openId") String openId);
 }
