@@ -7,36 +7,40 @@
     </insert>
     <update id="updateRecord">
         UPDATE record_info
-        SET user_id = #{userId},
-        amount = #{amount},
-        catalog_id = #{catalogId},
-        `type` = #{type},
-        record_time = #{recordTime},
-        update_time = CURRENT_TIMESTAMP
+        SET user_id     = #{userId},
+            amount      = #{amount},
+            catalog_id  = #{catalogId},
+            `type`      = #{type},
+            record_time = #{recordTime},
+            update_time = CURRENT_TIMESTAMP
         WHERE
-        id = #{id}
+            id = #{id}
     </update>
     <delete id="deleteRecordById">
         DELETE
-        *
+            *
         FROM
-        record_info
+            record_info
         WHERE
-        id = #{id}
+            id = #{id}
     </delete>
     <select id="queryRecords" resultType="java.util.Map">
         SELECT
-        id,
-        user_id AS userId,
-        amount,
-        catalog_id AS catalogId,
-        `type`,
-        record_time AS recordTime
+            catalog_info.id,
+            catalog_info.user_id AS userId,
+            amount,
+            catalog_id           AS catalogId,
+            catalog_info.`type`,
+            record_time          AS recordTime,
+            head_url             AS headUrl,
+            catalog_info.name    AS catalogName
         FROM
-        record_info
+            record_info
+            left join catalog_info
+                on catalog_id = catalog_info.id
+            left join user_info
+                on user_info.id = record_info.user_id
         WHERE
-        record_time &lt; #{time} AND user_id = #{userId}
-        LIMIT 0, #{num}
-
+            record_time &lt; #{time} AND record_info.user_id = #{userId} AND record_time &gt; #{endTime}
     </select>
 </mapper>

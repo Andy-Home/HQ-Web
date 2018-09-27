@@ -21,27 +21,6 @@ public class RecordController {
     @Autowired
     RecordService mRecordService;
 
-    /**
-     * 当用户有家庭账号时，查询同步表是否有数据
-     */
-    @ResponseBody
-    @RequestMapping("/sync")
-    public Response syncRecordList(@RequestParam int userId) {
-        List<Map<String, Object>> list;
-        try {
-            list = mRecordService.syncRecords(userId);
-        } catch (Exception e) {
-            return ResponseUtils.getServerError(e);
-        }
-        return ResponseUtils.getSuccess(list);
-    }
-
-    @ResponseBody
-    @RequestMapping("/syncCallback")
-    public void syncSuccessCallback(@RequestParam int... recordId) {
-        mRecordService.syncSuccess(recordId);
-    }
-
     @ResponseBody
     @RequestMapping("/getRecords")
     public Response getRecordList(@RequestParam int userId,

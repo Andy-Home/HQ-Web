@@ -30,4 +30,16 @@
         WHERE
             user_id = #{userId} AND parent_id = #{parentId} AND status = 1
     </select>
+    <select id="queryCatalog" resultType="com.andy.dao.entity.Catalog">
+        SELECT
+            id,
+            parent_id AS parentId,
+            user_id   AS userId,
+            name,
+            type
+        FROM
+            catalog_info
+        WHERE
+            id = #{id}
+    </select>
 </mapper>

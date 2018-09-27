@@ -23,4 +23,6 @@ public interface CatalogInfoDao {
 
     List<Map<String, Object>> queryCatalogs(@Param("parentId") int parentId,
                                             @Param("userId") int userId);
+
+    Catalog queryCatalog(@Param("id") int id);
 }

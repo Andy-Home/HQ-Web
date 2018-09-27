@@ -24,6 +24,6 @@ public interface RecordInfoDao {
     int deleteRecordById(@Param("id") int id);
 
     List<Map<String, Object>> queryRecords(@Param("userId") int userId,
-                                           @Param("time") long time,
-                                           @Param("num") int num);
+                                           @Param("time") Timestamp time,
+                                           @Param("endTime") Timestamp endTime);
 }
