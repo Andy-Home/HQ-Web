@@ -1,5 +1,6 @@
 package com.andy.dao.db;
 
+import com.andy.dao.entity.Record;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.Timestamp;
@@ -11,11 +12,7 @@ import java.util.Map;
  */
 public interface RecordInfoDao {
 
-    int insertRecord(@Param("userId") int userId,
-                     @Param("amount") double amount,
-                     @Param("catalogId") int catalogId,
-                     @Param("type") int type,
-                     @Param("recordTime") Timestamp recordTime);
+    int insertRecord(Record record);
 
     int updateRecord(@Param("id") Integer id,
                      @Param("userId") Integer userId,

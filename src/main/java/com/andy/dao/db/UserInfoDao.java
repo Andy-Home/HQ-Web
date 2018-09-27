@@ -1,14 +1,13 @@
 package com.andy.dao.db;
 
+import com.andy.dao.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
 public interface UserInfoDao {
-    int registerWeiXin(@Param("openId") String openId,
-                       @Param("accessToken") String accessToken,
-                       @Param("refreshToken") String refreshToken);
+    int registerWeiXin(User user);
 
     int updateWeiXinRefreshToken(@Param("openId") String openId,
                                  @Param("refreshToken") String refreshToken);
@@ -22,8 +21,7 @@ public interface UserInfoDao {
 
     List<Integer> queryRelationUserId(@Param("id") int id);
 
-    int registerQQ(@Param("openId") String openId,
-                   @Param("accessToken") String accessToken);
+    int registerQQ(User user);
 
     Integer queryIdByQQOpenId(@Param("openId") String openId);
 

@@ -4,11 +4,11 @@
 
     <insert id="registerWeiXin" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_info (wei_xin_open_id, wei_xin_access_token, wei_xin_refresh_token)
-        VALUES (#{openId}, #{accessToken}, #{refreshToken})
+        VALUES (#{weiXinOpenId}, #{weiXinAccessToken}, #{weiXinRefreshToken})
     </insert>
     <insert id="registerQQ" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_info (qq_open_id, qq_access_token)
-        VALUES (#{openId}, #{accessToken})
+        VALUES (#{qqOpenId}, #{qqAccessToken})
     </insert>
     <update id="updateWeiXinRefreshToken">
         UPDATE user_info

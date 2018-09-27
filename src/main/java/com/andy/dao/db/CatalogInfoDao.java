@@ -1,5 +1,6 @@
 package com.andy.dao.db;
 
+import com.andy.dao.entity.Catalog;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,10 +11,7 @@ import java.util.Map;
  */
 public interface CatalogInfoDao {
 
-    int insertCatalog(@Param("parentId") int parentId,
-                      @Param("userId") int userId,
-                      @Param("name") String name,
-                      @Param("type") int type);
+    int insertCatalog(Catalog catalog);
 
     int updateCatalog(@Param("id") int id,
                       @Param("parentId") int parentId,

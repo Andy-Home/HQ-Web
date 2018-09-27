@@ -3,6 +3,7 @@ package com.andy.service.record;
 import com.andy.dao.db.RecordInfoDao;
 import com.andy.dao.db.SyncRecordDao;
 import com.andy.dao.db.UserInfoDao;
+import com.andy.dao.entity.Record;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,15 @@ public class RecordService {
         int catalogId = jsonObject.getInt("catalogId");
         int type = jsonObject.getInt("type");
         Timestamp recordTime = (Timestamp) jsonObject.get("recordTime");
+        Record record = new Record();
+        record.setUserId(userId);
+        record.setAmount(amount);
+        record.setCatalogId(catalogId);
+        record.setType(type);
+        record.setRecordTime(recordTime);
 
-        int recordId = mRecordInfoDao.insertRecord(userId, amount, catalogId, type, recordTime);
+        mRecordInfoDao.insertRecord(record);
+        int recordId = record.getId();
 
         if (recordId > 0) {
 

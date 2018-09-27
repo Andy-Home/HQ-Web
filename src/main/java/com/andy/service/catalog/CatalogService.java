@@ -3,6 +3,7 @@ package com.andy.service.catalog;
 import com.andy.dao.db.CatalogInfoDao;
 import com.andy.dao.db.SyncCatalogDao;
 import com.andy.dao.db.UserInfoDao;
+import com.andy.dao.entity.Catalog;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,14 @@ public class CatalogService {
         int userId = jsonObject.getInt("userId");
         String name = jsonObject.getString("name");
         int type = jsonObject.getInt("type");
+        Catalog catalog = new Catalog();
+        catalog.setParentId(parentId);
+        catalog.setName(name);
+        catalog.setUserId(userId);
+        catalog.setType(type);
 
-        int catalogId = mCatalogInfoDao.insertCatalog(parentId, userId, name, type);
-
+        mCatalogInfoDao.insertCatalog(catalog);
+        int catalogId = catalog.getId();
         if (catalogId > 0) {
             List<Integer> users = mUserInfoDao.queryRelationUserId(userId);
             if (users != null && users.size() > 0) {
