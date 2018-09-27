@@ -18,30 +18,6 @@ public class UserController {
     UserService mUserService;
 
     @ResponseBody
-    @RequestMapping("/register")
-    public Response register(@RequestParam String data) {
-        JSONObject json;
-        try {
-            json = JSONObject.fromObject(data);
-        } catch (Exception e) {
-            return ResponseUtils.getParameterError("check data is Json data");
-        }
-
-        int id;
-        try {
-            id = mUserService.register(json);
-        } catch (Exception e) {
-            return ResponseUtils.getServerError(e);
-        }
-
-        if (id > 0) {
-            return ResponseUtils.getSuccess(id);
-        } else {
-            return ResponseUtils.getFail();
-        }
-    }
-
-    @ResponseBody
     @RequestMapping("/login")
     public Response login(@RequestParam String data) {
         JSONObject json;

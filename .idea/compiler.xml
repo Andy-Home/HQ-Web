@@ -9,8 +9,5 @@
         <module name="HQ" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="HQ" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>

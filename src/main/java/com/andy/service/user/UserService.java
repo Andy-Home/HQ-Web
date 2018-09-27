@@ -8,16 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    public int register(JSONObject jsonObject) {
-        String channel = jsonObject.getString("channel");
-        if (channel.equals("QQ")) {
-            return QQRegister(jsonObject);
-        } else if (channel.equals("WeiXin")) {
-            return WeiXinRegister(jsonObject);
-        }
-        return 0;
-    }
-
     @Autowired
     UserInfoDao mUserInfoDao;
 
