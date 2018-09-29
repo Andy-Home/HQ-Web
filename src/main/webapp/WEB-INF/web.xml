@@ -7,6 +7,23 @@
          version="3.0">
     <display-name>Archetype Created Web Application</display-name>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/spring-*.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>
+            com.andy.PropertiesListener
+        </listener-class>
+    </listener>
+
     <!-- 配置编码方式-->
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -24,19 +41,6 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/spring-*.xml</param-value>
-    </context-param>
-
-    <!-- Spring配置 -->
-    <listener>
-        <listener-class>
-            org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
-
 
     <!-- 欢迎页面-->
     <welcome-file-list>

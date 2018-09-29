@@ -26,4 +26,12 @@ public interface UserInfoDao {
     Integer queryIdByQQOpenId(@Param("openId") String openId);
 
     Integer queryIdByWeiXinOpenId(@Param("openId") String openId);
+
+    int updateUserInfoById(@Param("id") int id,
+                           @Param("nickName") String nickName,
+                           @Param("headUrl") String headUrl,
+                           @Param("sex") int sex);
+
+    int updateLoginStatus(@Param("id") int id,
+                          @Param("status") int status);
 }

@@ -20,6 +20,18 @@
         SET wei_xin_access_token = #{accessToken}
         WHERE wei_xin_open_id = #{openId}
     </update>
+    <update id="updateUserInfoById">
+        UPDATE user_info
+        SET nick_name = #{nickName},
+            head_url  = #{headUrl},
+            sex       = #{sex}
+        WHERE id = #{id}
+    </update>
+    <update id="updateLoginStatus">
+        UPDATE user_info
+        SET login_status = #{status}
+        WHERE id = #{id}
+    </update>
     <select id="queryUserInfoByWeiXinOpenId" resultType="java.util.Map">
         SELECT
             id,
@@ -41,16 +53,15 @@
         WHERE id = #{id}
     </select>
     <select id="queryRelationUserId" resultType="java.lang.Integer">
-        SELECT
-        id
+        SELECT id
         FROM
-        user_info
+            user_info
         WHERE home_id = (
-        SELECT home_id
-        FROM
-        user_info
-        WHERE
-        id = #{id}
+            SELECT home_id
+            FROM
+                user_info
+            WHERE
+                id = #{id}
         )
     </select>
     <select id="queryIdByQQOpenId" resultType="java.lang.Integer">
