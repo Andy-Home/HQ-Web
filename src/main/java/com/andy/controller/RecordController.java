@@ -114,4 +114,18 @@ public class RecordController {
             return ResponseUtils.getFail();
         }
     }
+
+    @ResponseBody
+    @RequestMapping("/sync")
+    public Response sync(@RequestParam int userId,
+                         @RequestParam long startTime,
+                         @RequestParam long endTime) {
+        List<Map<String, Object>> list;
+        try {
+            list = mRecordService.getSyncRecords(startTime, endTime, userId);
+        } catch (Exception e) {
+            return ResponseUtils.getServerError(e);
+        }
+        return ResponseUtils.getSuccess(list);
+    }
 }

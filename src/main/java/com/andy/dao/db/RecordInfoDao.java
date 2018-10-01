@@ -26,4 +26,8 @@ public interface RecordInfoDao {
     List<Map<String, Object>> queryRecords(@Param("userId") int userId,
                                            @Param("time") Timestamp time,
                                            @Param("endTime") Timestamp endTime);
+
+    List<Map<String,Object>> querySyncRecords(@Param("start") Timestamp start,
+                                              @Param("end") Timestamp end,
+                                              @Param("userId") int... userId);
 }

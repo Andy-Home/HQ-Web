@@ -25,20 +25,15 @@ public class CatalogController {
 
     @ResponseBody
     @RequestMapping("/sync")
-    public Response syncCatalog(@RequestParam int userId) {
+    public Response syncCatalog(@RequestParam int userId,
+                                @RequestParam long updateTime) {
         List<Map<String, Object>> list;
         try {
-            list = mCatalogService.syncCatalogs(userId);
+            list = mCatalogService.syncCatalogs(userId,updateTime);
         } catch (Exception e) {
             return ResponseUtils.getServerError(e);
         }
         return ResponseUtils.getSuccess(list);
-    }
-
-    @ResponseBody
-    @RequestMapping("/syncCallback")
-    public void syncSuccessCallback(@RequestParam int... catalogId) {
-        mCatalogService.syncSuccess(catalogId);
     }
 
     @ResponseBody

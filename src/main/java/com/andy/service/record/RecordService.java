@@ -2,7 +2,6 @@ package com.andy.service.record;
 
 import com.andy.dao.db.CatalogInfoDao;
 import com.andy.dao.db.RecordInfoDao;
-import com.andy.dao.db.SyncRecordDao;
 import com.andy.dao.db.UserInfoDao;
 import com.andy.dao.entity.Catalog;
 import com.andy.dao.entity.Record;
@@ -44,8 +43,6 @@ public class RecordService {
     }
 
     @Autowired
-    private SyncRecordDao mSyncRecordDao;
-    @Autowired
     private UserInfoDao mUserInfoDao;
     @Autowired
     private CatalogInfoDao mCatalogInfoDao;
@@ -71,14 +68,6 @@ public class RecordService {
         int recordId = record.getId();
 
         if (recordId > 0) {
-
-            List<Integer> users = mUserInfoDao.queryRelationUserId(userId);
-            if (users != null && users.size() > 0) {
-
-                for (Integer id : users) {
-                    mSyncRecordDao.insertRecord(id, userId, recordId, amount, catalogId, type, recordTime, "i");
-                }
-            }
             return recordId;
         } else {
             return 0;
@@ -95,14 +84,6 @@ public class RecordService {
 
         int result = mRecordInfoDao.updateRecord(id, userId, amount, catalogId, type, recordTime);
         if (result > 0) {
-
-            List<Integer> users = mUserInfoDao.queryRelationUserId(userId);
-            if (users != null && users.size() > 0) {
-
-                for (Integer user : users) {
-                    mSyncRecordDao.insertRecord(user, userId, id, amount, catalogId, type, recordTime, "u");
-                }
-            }
             return true;
         }
         return false;
@@ -111,16 +92,24 @@ public class RecordService {
     public boolean deleteRecord(int recordId, int userId) {
         int result = mRecordInfoDao.deleteRecordById(recordId);
         if (result > 0) {
-
-            List<Integer> users = mUserInfoDao.queryRelationUserId(userId);
-            if (users != null && users.size() > 0) {
-
-                for (Integer user : users) {
-                    mSyncRecordDao.insertRecord(user, userId, recordId, null, null, null, null, "d");
-                }
-            }
             return true;
         }
         return false;
+    }
+
+    public List<Map<String,Object>> getSyncRecords(long startTime,long endTime,int userId){
+        List<Integer> mUser = mUserInfoDao.queryRelationUserId(userId);
+
+        if(mUser == null || mUser.size() == 0){
+            return null;
+        }else {
+
+            int[] a = new int[mUser.size()];
+            for (int i = 0; i < mUser.size(); i++){
+                a[i] = mUser.get(i);
+            }
+
+            return mRecordInfoDao.querySyncRecords(new Timestamp(startTime), new Timestamp(endTime), a);
+        }
     }
 }

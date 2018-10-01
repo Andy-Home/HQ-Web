@@ -3,6 +3,7 @@ package com.andy.dao.db;
 import com.andy.dao.entity.Catalog;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +26,7 @@ public interface CatalogInfoDao {
                                             @Param("userId") int userId);
 
     Catalog queryCatalog(@Param("id") int id);
+
+    List<Map<String,Object>> querySyncCatalogs(@Param("updateTime") Timestamp updateTime,
+                                               @Param("userId") int... userId);
 }

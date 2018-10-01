@@ -1,13 +1,13 @@
 package com.andy.service.catalog;
 
 import com.andy.dao.db.CatalogInfoDao;
-import com.andy.dao.db.SyncCatalogDao;
 import com.andy.dao.db.UserInfoDao;
 import com.andy.dao.entity.Catalog;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +19,6 @@ public class CatalogService {
 
     @Autowired
     CatalogInfoDao mCatalogInfoDao;
-
-    @Autowired
-    SyncCatalogDao mSyncCatalogDao;
 
     @Autowired
     UserInfoDao mUserInfoDao;
@@ -40,13 +37,6 @@ public class CatalogService {
         mCatalogInfoDao.insertCatalog(catalog);
         int catalogId = catalog.getId();
         if (catalogId > 0) {
-            List<Integer> users = mUserInfoDao.queryRelationUserId(userId);
-            if (users != null && users.size() > 0) {
-
-                for (Integer id : users) {
-                    mSyncCatalogDao.insertCatalog(id, catalogId, parentId, userId, name, type, "i");
-                }
-            }
             return catalogId;
         } else {
             return 0;
@@ -63,13 +53,6 @@ public class CatalogService {
         int result = mCatalogInfoDao.updateCatalog(catalogId, parentId, userId, name, type);
 
         if (result > 0) {
-            List<Integer> users = mUserInfoDao.queryRelationUserId(userId);
-            if (users != null && users.size() > 0) {
-
-                for (Integer id : users) {
-                    mSyncCatalogDao.insertCatalog(id, catalogId, parentId, userId, name, type, "u");
-                }
-            }
             return true;
         } else {
             return false;
@@ -80,13 +63,6 @@ public class CatalogService {
         int result = mCatalogInfoDao.deleteCatalog(catalogId);
 
         if (result > 0) {
-            List<Integer> users = mUserInfoDao.queryRelationUserId(userId);
-            if (users != null && users.size() > 0) {
-
-                for (Integer id : users) {
-                    mSyncCatalogDao.insertCatalog(id, catalogId, null, userId, null, null, "d");
-                }
-            }
             return true;
         } else {
             return false;
@@ -97,16 +73,20 @@ public class CatalogService {
         return mCatalogInfoDao.queryCatalogs(parentId, userId);
     }
 
-    public List<Map<String, Object>> syncCatalogs(int userId) {
-        return mSyncCatalogDao.queryAllCatalogByUserId(userId);
-    }
+    public List<Map<String, Object>> syncCatalogs(int userId, long updateTime) {
+        List<Integer> mUser = mUserInfoDao.queryRelationUserId(userId);
 
-    /**
-     * 同步成功，删除表sync_record中同步成功的数据
-     *
-     * @param catalogId 同步成功的数据ID
-     */
-    public void syncSuccess(int... catalogId) {
-        mSyncCatalogDao.deleteCatalogById(catalogId);
+        if(mUser == null || mUser.size() == 0){
+            return null;
+        }else {
+
+            int[] a = new int[mUser.size()];
+            for (int i = 0; i < mUser.size(); i++){
+                a[i] = mUser.get(i);
+            }
+
+            return mCatalogInfoDao.querySyncCatalogs(new Timestamp(updateTime), a);
+        }
+
     }
 }

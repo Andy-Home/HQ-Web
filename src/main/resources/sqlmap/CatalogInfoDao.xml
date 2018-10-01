@@ -7,15 +7,17 @@
     </insert>
     <update id="updateCatalog">
         UPDATE catalog_info
-        SET parent_id = #{parentId},
-            user_id   = #{userId},
-            name      = #{name},
-            type      = #{type}
+        SET parent_id   = #{parentId},
+            user_id     = #{userId},
+            name        = #{name},
+            type        = #{type},
+            update_time = CURRENT_TIMESTAMP
         WHERE id = #{id}
     </update>
     <update id="deleteCatalog">
         UPDATE catalog_info
-        SET status = 0
+        SET status      = 0,
+            update_time = CURRENT_TIMESTAMP
         WHERE id = #{id}
     </update>
     <select id="queryCatalogs" resultType="java.util.Map">
@@ -41,5 +43,18 @@
             catalog_info
         WHERE
             id = #{id}
+    </select>
+    <select id="querySyncCatalogs" resultType="java.util.Map">
+        SELECT
+            id,
+            parent_id AS parentId,
+            user_id   AS userId,
+            name,
+            type,
+            status
+        FROM
+            catalog_info
+        WHERE
+            user_id IN (#{userId}) AND update_time &gt; #{updateTime}
     </select>
 </mapper>
